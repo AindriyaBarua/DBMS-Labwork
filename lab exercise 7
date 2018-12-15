@@ -1,0 +1,27 @@
+﻿select ssn from employee
+select * from employee where salary=(select max(salary) from employee)
+select address from employee where salary=(select max(salary) from employee)
+select  depno from employee where salary=(select max(salary) from employee)
+select * from employee where salary>(select salary from employee where fname like 'Alex') 
+select * from employee where salary>(select salary from employee where fname like 'Alex') and bdate=(select bdate from employee where fname like 'Alex') 
+select * from department
+select * from dependent
+select * from project where depno=(select depno from employee where fname like 'Nandita')
+select * from dept_loction
+select * from employee where depno=(select depno from department where price=(select max(price) from department))
+select * from employee where depno= (select depno from department where price > 100000)
+select * from project
+select address from employee where depno=(select depno from project where pname like 'Reorganization')
+select * from employee where salary >(select avg(salary) from employee)
+select fname from employee where depno in (select depno from department where dept_name like 'CS' or dept_name like 'ELEC. ENG.' or dept_name like 'PHYSICS')
+select fname from employee where depno in (select depno from department where building like 'Painter')
+select * from employee where depno=(select depno from employee where fname like 'Arnold') and salary> (select salary from employee where fname like 'Arnold')
+select * from employee where salary >(select avg(salary) from employee)
+select fname,depno from employee where depno!=(select  depno from project where pname like 'Middleware')
+select fname from employee where salary > (select salary from employee where fname like 'Ar%')
+select dept_name from department where (select min(salary) from employee where depno=1) < (select min(salary)from employee group by depno)
+update employee
+set salary=salary+100 where depno=1
+select * from works_on
+select * from employee where ssn in (select essn from works_on where hours>10)
+select pname,pnumber from project where depno!=(select depno from employee where fname like 'Nandita')

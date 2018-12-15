@@ -1,0 +1,138 @@
+﻿create table department
+   (dept_name varchar(20),
+    building varchar(15),
+    budget numeric(12,2),
+    primary key(dept_name));
+create table course
+   (course_id varchar(7),
+    title varchar(50),
+    dept_name varchar(20),
+    credits numeric(2,0),
+    primary key(course_id),
+    foreign key(dept_name)
+    references department);
+create table instructor
+   (ID        varchar(5),
+    name      varchar (20)not null,
+    dept_name varchar(50),
+    salary    numeric(8,2),
+    primary key (ID),
+    foreign key (dept_name)
+    references department);
+
+create table student503(ID varchar, name varchar, state varchar, dept_name varchar, PRIMARY KEY(ID),FOREIGN KEY(dept_name) references department on delete cascade on update cascade);
+
+create table pre_req_Course503(course_id varchar, pre_req_course_id varchar, primary key(course_id,pre_req_course_id),foreign key(course_id) references course on delete cascade on update cascade );
+
+create table Advisor503(student_id varchar, instructor_id varchar , foreign key(student_id) references student on delete cascade on update cascade );
+
+drop table Advisor;
+drop table Advisor503;
+
+create table Advisor503(student_id varchar, instructor_id varchar , foreign key(student_id) references student on delete cascade on update cascade, foreign key(instructor_id) references instructor on delete cascade on update cascade  );
+
+create table register503(student_id varchar, course_id varchar, grade varchar,foreign key(student_id) references student on delete cascade on update cascade, foreign key(course_id) references course on delete cascade on update cascade);
+
+
+select * from student503;
+
+alter TABLE student503 ADD COLUMN tuition_fee numeric(9,2);
+alter TABLE student503 ADD COLUMN bus_fee numeric(9,2);
+
+alter TABLE student503 DROP COLUMN bus_fee;
+
+alter table student503
+	alter column state type varchar(80),
+	alter column name type varchar(30);
+
+alter table student503 add constraint fee_check check(tuition_fee>0);
+
+alter table student503 drop constraint fee_check;
+
+
+
+
+
+alter table student503 add column CGPA varchar;
+
+ insert into student503 values ('1','AINDRIYA','AGT','Biology','9.2'),('2','VIVEKA','AP','Music','8.2'),('3','NIKI','KERALA','Finance','6.5'),('4','PARNA','MP','History','7.2');
+SELECT * FROM DEPARTMENT;
+
+
+insert into department(dept_name,building,budget) values 
+('Comp. Sci','Taylor',100000),
+('Biology','Watson',90000),
+('Elc. Eng.','Taylor',85000),
+('Music','Packard',80000),
+('Finance','Painter',120000),
+('History','Painter',50000),
+('Physics','Watson',70000);
+insert into instructor(ID,name,dept_name,salary) values
+('2012','Einstein','Physics',95000),
+('2324','Jack D','Biology',90000),
+('2548','Wu','Finance',90000),
+('4556','El Said','History',60000),
+('9834','Katz','Elc. Eng.',80000),
+('5858','Crick','Music',70000),
+('7654','Singh','Comp. Sci',80000);
+insert into course(course_id,title,dept_name,credits) values
+('BIO-101','Intro to biology','Biology',4),
+('BIO-301','GEnetics','Biology',4),
+('BIO-309','Computational Biology','Biology',3),
+('CS-101','Intro to Computer Sciernce','Comp. Sci',4),
+('CS-190','Game Design','Comp. Sci',4),
+('CS-315','Robotics','Comp. Sci',3),
+('CS-319','Image Processing','Comp. Sci',3),
+('CS-347','Database Management system','Comp. Sci',3),
+('EE-181','Intro to Digital System','Elc. Eng.',3),
+('FIN-201','Investment banking','Finance',3),
+('HIS-351','World History','History',3),
+('MU-199','Music Video Production','Music',3),
+('PHY-101','Physical Principles','Physics',4);
+
+
+SELECT * FROM INSTRUCTOR;
+
+create table section
+(course_id varchar(20),
+building varchar(150),
+sec_id varchar(10),
+sem varchar(3),
+room_no numeric(4,0),
+year numeric(4,0),
+primary key(sec_id,sem,year,course_id),
+foreign key(course_id)references course);
+
+
+create table teaches
+(course_id varchar(20),
+id varchar(20),
+sec_id varchar(10),
+sem varchar(3),
+year numeric(4,0),
+foreign key(sec_id,sem,year,course_id)references section,
+foreign key (id) references instructor);
+
+select count(course_id) as courses from section where year=2017
+select distinct id from teaches where sem='5' and year=2017
+select avg(budget) from department1 where building='painter'
+select*from section order by course_id
+select dept_name,max(budget) from department group by dept_name
+alter table section
+add column day varchar(10),
+add column start_time varchar(10),
+add column end_time varchar(10);
+
+select * from section where start_time='12'and day='tuesday'and sem='5' and year=2017
+
+update instructor1 set id='i1056' where id='1056'
+select avg(credits) from course1 where dept_name='CS' or dept_name='CSA'
+select max(salary) as max_salary from instructor1 where dept_name='CS' 
+alter table instructor
+add column dateofbirth date
+
+Select *, extract (year from age (current_Date,dateofbirth)) as “age” from instructor;  
+
+
+
+
